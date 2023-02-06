@@ -55,7 +55,11 @@ class FakeRole:
     """
 
     position = 0
-    colour = discord.Embed.Empty
+    colour = None
+
+
+class EmptyAvatar:
+    url = ""
 
 
 class UnavailableMember(discord.abc.User, discord.abc.Messageable):
@@ -109,8 +113,8 @@ class UnavailableMember(discord.abc.User, discord.abc.Messageable):
         return f"<@{self.id}>"
 
     @property
-    def avatar_url(self):
-        return ""
+    def avatar(self):
+        return EmptyAvatar()
 
     def __str__(self):
         return "Unknown#0000"
@@ -662,7 +666,7 @@ class API:
 
         # embed for the modlog
         log_embed = discord.Embed()
-        log_embed.set_author(name=f"{member.name} | {member.id}", icon_url=member.avatar_url)
+        log_embed.set_author(name=f"{member.name} | {member.id}", icon_url=member.avatar.url)
         log_embed.title = _("Level {level} warning ({action})").format(
             level=level, action=action[0]
         )
